@@ -1,207 +1,569 @@
+/* ==========================================================================
+   20/10 LOVE PROJECT - STYLESHEET
+   Aesthetics: Neo-Brutalism + Sweet Pastel Romance
+   ========================================================================== */
+
+:root {
+    --bg-main: #fce7f3;
+    --border-color: #1e1b18;
+    --shadow-color: #1e1b18;
+    --color-pink: #ff2a5f;
+    --color-pink-hover: #e11d48;
+    --color-pink-light: #fbcfe8;
+    --color-yellow: #fef08a;
+    --color-mint: #a7f3d0;
+    --color-lavender: #e9d5ff;
+    --color-blue: #bae6fd;
+    --color-white: #ffffff;
+    --color-text: #1e1b18;
+    --color-text-muted: #594a4e;
+    --card-radius: 28px;
+    --btn-radius: 18px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-    background-color: #fbcfe8;
-    background-image: radial-gradient(#f472b6 1.5px, transparent 1.5px);
-    background-size: 24px 24px;
+    background-color: var(--bg-main);
+    background-image: 
+        radial-gradient(#f472b6 1.8px, transparent 1.8px),
+        radial-gradient(#fbcfe8 1.8px, transparent 1.8px);
+    background-size: 32px 32px;
+    background-position: 0 0, 16px 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 24px 16px;
     position: relative;
     overflow-x: hidden;
+    color: var(--color-text);
 }
 
-/* Các hình trang trí nhí nhảnh phía sau */
-.bg-shape {
+/* ==================== CÁNH HOA & TRÁI TIM RƠI TỰ DO ==================== */
+.falling-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.falling-item {
     position: absolute;
-    border: 3px solid #000;
+    top: -40px;
+    user-select: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateY(50vh) rotate(180deg) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg) scale(0.9);
+        opacity: 0.2;
+    }
+}
+
+/* ==================== NÚT ĐIỀU KHIỂN NHẠC GÓC TRÊN ==================== */
+.music-controller {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+}
+
+.music-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 2.5px solid var(--border-color);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--shadow-color);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.music-toggle-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--shadow-color);
+    background: var(--color-yellow);
+}
+
+.music-toggle-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.equalizer-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2.5px;
+    height: 14px;
+}
+
+.equalizer-bars span {
+    display: block;
+    width: 3px;
+    height: 100%;
+    background-color: var(--color-pink);
+    border-radius: 2px;
+    animation: eqWave 0.8s ease-in-out infinite alternate;
+}
+
+.equalizer-bars span:nth-child(2) {
+    animation-delay: 0.2s;
+    height: 60%;
+}
+.equalizer-bars span:nth-child(3) {
+    animation-delay: 0.4s;
+    height: 80%;
+}
+
+@keyframes eqWave {
+    0% { height: 20%; }
+    100% { height: 100%; }
+}
+
+/* ==================== BACKGROUND HÌNH ĐỐM NEO-BRUTALISM ==================== */
+.bg-shape {
+    position: fixed;
+    border: 3px solid var(--border-color);
     border-radius: 50%;
     z-index: 0;
-}
-.shape-1 {
-    width: 120px;
-    height: 120px;
-    background-color: #fef08a;
-    top: 10%;
-    left: 8%;
-    box-shadow: 4px 4px 0px #000;
-}
-.shape-2 {
-    width: 90px;
-    height: 90px;
-    background-color: #a7f3d0;
-    bottom: 12%;
-    right: 8%;
-    box-shadow: 4px 4px 0px #000;
+    pointer-events: none;
+    animation: floatShape 8s ease-in-out infinite alternate;
 }
 
-/* Phong cách Neo-Brutalism Card */
-.card {
+@keyframes floatShape {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.shape-1 {
+    width: 130px;
+    height: 130px;
+    background-color: var(--color-yellow);
+    top: 8%;
+    left: 6%;
+    box-shadow: 5px 5px 0px var(--shadow-color);
+}
+
+.shape-2 {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-mint);
+    bottom: 10%;
+    right: 6%;
+    box-shadow: 5px 5px 0px var(--shadow-color);
+    animation-delay: -3s;
+}
+
+.shape-3 {
+    width: 70px;
+    height: 70px;
+    background-color: var(--color-lavender);
+    top: 65%;
+    left: 4%;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    animation-delay: -5s;
+}
+
+.shape-4 {
+    width: 85px;
+    height: 85px;
+    background-color: var(--color-blue);
+    top: 15%;
+    right: 8%;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    animation-delay: -2s;
+}
+
+/* ==================== CARD CHÍNH (NEO-BRUTALISM) ==================== */
+.app-container {
     position: relative;
     z-index: 10;
-    background: #ffffff;
-    border: 4px solid #000;
-    border-radius: 28px;
-    padding: 35px 25px;
-    max-width: 420px;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+    background: var(--color-white);
+    border: 3.5px solid var(--border-color);
+    border-radius: var(--card-radius);
+    padding: 36px 26px;
     width: 100%;
     text-align: center;
-    box-shadow: 8px 8px 0px #000;
-    transition: all 0.2s ease;
+    box-shadow: 8px 8px 0px var(--shadow-color);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: cardEntrance 0.5s ease;
+}
+
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .badge-tag {
     display: inline-block;
-    background: #fef08a;
-    color: #000;
+    background: var(--color-yellow);
+    color: var(--color-text);
     font-weight: 900;
     font-size: 13px;
-    padding: 6px 16px;
-    border: 2px solid #000;
+    letter-spacing: 0.5px;
+    padding: 7px 18px;
+    border: 2.5px solid var(--border-color);
     border-radius: 20px;
-    box-shadow: 2px 2px 0px #000;
+    box-shadow: 3px 3px 0px var(--shadow-color);
     margin-bottom: 20px;
     text-transform: uppercase;
 }
 
 .success-tag {
-    background: #a7f3d0;
+    background: var(--color-mint);
 }
 
 .emoji-box {
-    font-size: 68px;
-    margin-bottom: 15px;
+    font-size: 72px;
+    margin-bottom: 16px;
     line-height: 1;
-    animation: wiggle 2s infinite ease-in-out;
+    display: inline-block;
+    animation: wiggle 2.2s infinite ease-in-out;
+    filter: drop-shadow(2px 4px 0 rgba(0,0,0,0.1));
 }
 
 @keyframes wiggle {
-    0%, 100% { transform: rotate(-3deg) scale(1); }
-    50% { transform: rotate(3deg) scale(1.05); }
+    0%, 100% { transform: rotate(-4deg) scale(1); }
+    50% { transform: rotate(4deg) scale(1.08); }
 }
 
-h2 {
-    color: #000;
+.card-title, .care-title {
+    color: var(--color-text);
     font-size: 20px;
     font-weight: 800;
-    line-height: 1.5;
-    margin-bottom: 25px;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
+.card-title b, .care-title b {
+    color: var(--color-pink);
+    text-decoration: underline wavy var(--color-yellow);
+    text-underline-offset: 4px;
+}
+
+.subtitle {
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+}
+
+.hint-text {
+    margin-top: 18px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #9d4edd;
+}
+
+/* ==================== BUTTONS GROUP ==================== */
 .btn-group {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
     flex-wrap: wrap;
+    position: relative;
+    min-height: 60px;
 }
 
 button {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 900;
-    border: 3px solid #000;
-    border-radius: 20px;
+    font-family: inherit;
+    font-weight: 800;
+    border: 3px solid var(--border-color);
+    border-radius: var(--btn-radius);
     cursor: pointer;
-    transition: all 0.15s ease;
+    outline: none;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, font-size 0.2s ease, padding 0.2s ease;
 }
 
 .btn-yes {
-    background-color: #ff2a5f;
-    color: #fff;
-    padding: 14px 28px;
+    background-color: var(--color-pink);
+    color: #ffffff;
+    padding: 14px 30px;
     font-size: 16px;
-    box-shadow: 4px 4px 0px #000;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    position: relative;
+    z-index: 2;
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 4px 4px 0px var(--shadow-color);
+    }
+    100% {
+        box-shadow: 4px 4px 0px var(--shadow-color), 0 0 14px rgba(255, 42, 95, 0.45);
+    }
 }
 
 .btn-yes:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px #000;
-    background-color: #ff124b;
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0px var(--shadow-color);
+    background-color: var(--color-pink-hover);
 }
 
 .btn-yes:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px #000;
+    box-shadow: 2px 2px 0px var(--shadow-color);
 }
 
 .btn-no {
-    background-color: #e2e8f0;
-    color: #000;
+    background-color: #f3f4f6;
+    color: #4b5563;
     padding: 14px 24px;
-    font-size: 16px;
-    box-shadow: 4px 4px 0px #000;
+    font-size: 15px;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .btn-no:hover {
-    background-color: #cbd5e1;
+    background-color: #e5e7eb;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--shadow-color);
 }
 
-.subtitle {
-    color: #334155;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.6;
-    margin: 15px 0 20px 0;
+/* ==================== THANH NĂNG LƯỢNG (ENERGY CONTAINER) ==================== */
+.energy-container {
+    background: #fff8fc;
+    border: 2.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 22px;
+    box-shadow: 4px 4px 0px var(--shadow-color);
 }
 
-.ss-box {
-    background-color: #fef08a;
-    border: 2px dashed #000;
+.energy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
+    font-size: 14.5px;
+    margin-bottom: 10px;
+}
+
+.energy-value {
+    color: var(--color-pink);
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.energy-bar-track {
+    width: 100%;
+    height: 22px;
+    background-color: #fce7f3;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.energy-bar-fill {
+    height: 100%;
+    width: 20%;
+    background: linear-gradient(90deg, #ff758c 0%, #ff2a5f 70%, #ff85a2 100%);
+    background-size: 30px 30px;
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.25) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.25) 75%,
+        transparent 75%,
+        transparent
+    );
+    animation: moveStripes 1.2s linear infinite;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 8px;
+}
+
+@keyframes moveStripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 30px 0; }
+}
+
+.letter-unlock-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #ff2a5f, #ff6b8b);
+    color: #ffffff;
+    border: 3px solid var(--border-color);
     border-radius: 16px;
-    padding: 12px;
+    box-shadow: 4px 4px 0 var(--shadow-color);
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    animation: unlockPulse 1.4s infinite ease-in-out;
+}
+
+@keyframes unlockPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 4px 4px 0 var(--shadow-color);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 5px 5px 0 var(--shadow-color), 0 0 16px rgba(255, 42, 95, 0.6);
+    }
+}
+
+.letter-unlock-btn:hover {
+    background: linear-gradient(135deg, #e11d48, #ff4071);
+    transform: translateY(-2px);
+}
+
+/* ==================== CÁC NÚT TƯƠNG TÁC SẠC PIN ==================== */
+.care-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.care-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px 10px;
+    border: 2.5px solid var(--border-color);
+    border-radius: 18px;
+    box-shadow: 3px 3px 0px var(--shadow-color);
     font-size: 13px;
     font-weight: 800;
-    color: #000;
-}
-
-.hidden {
-    display: none;
-}
-.care-display {
-    background-color: #fff1f2;
-    border: 2px dashed #ff2a5f;
-    border-radius: 16px;
-    padding: 14px;
-    margin-top: 15px;
     text-align: center;
-    width: 100%; /* Giới hạn chiều rộng đúng bằng card */
-    box-sizing: border-box;
-    overflow: hidden; /* Không cho chữ tràn ra ngoài */
+    line-height: 1.35;
+    background-color: var(--color-white);
+    transition: all 0.15s ease;
 }
 
-.care-display p {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #9f1239;
-    line-height: 1.6;
-    white-space: pre-wrap; /* Giữ khoảng trắng chuẩn */
-    word-break: break-word; /* Tự động xuống dòng khi chạm mép khung */
+.care-btn .btn-icon {
+    font-size: 26px;
+    display: block;
+    transition: transform 0.2s ease;
 }
-/* Hiệu ứng hạt pháo hoa tung tóe */
+
+.care-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--shadow-color);
+}
+
+.care-btn:hover .btn-icon {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.care-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0px var(--shadow-color);
+}
+
+.care-btn-music { background-color: #ecfdf5; }
+.care-btn-music:hover { background-color: var(--color-mint); }
+
+.care-btn-hug { background-color: #fdf2f8; }
+.care-btn-hug:hover { background-color: #fce7f3; }
+
+.care-btn-letter { background-color: #fefce8; }
+.care-btn-letter:hover { background-color: var(--color-yellow); }
+
+.care-btn-voucher { background-color: #f5f3ff; }
+.care-btn-voucher:hover { background-color: var(--color-lavender); }
+
+/* ==================== KHUNG HIỂN THỊ TYPEWRITER ==================== */
+.care-display {
+    background-color: #fffdf5;
+    border: 2.5px solid var(--border-color);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    text-align: left;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.display-tag {
+    font-size: 11.5px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--color-pink);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+#display-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--color-text);
+    min-height: 48px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ==================== HIỆU ỨNG PHÁO HOA & PARTICLES ==================== */
 .firework-particle {
     position: fixed;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 9999;
-    animation: explode 0.8s ease-out forwards;
+    z-index: 999;
+    animation: explode 0.85s ease-out forwards;
 }
 
 @keyframes explode {
     0% {
-        transform: translate(0, 0) scale(1);
+        transform: translate(0, 0) scale(1.2);
         opacity: 1;
     }
     100% {
@@ -209,161 +571,31 @@ button {
         opacity: 0;
     }
 }
-/* Styling cho Trạm sạc năng lượng */
-.care-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 15px 0 5px 0;
-}
 
-.care-btn {
-    background: #f8fafc;
-    color: #000;
-    font-size: 14px;
-    font-weight: 800;
-    padding: 12px 18px;
-    border: 2px solid #000;
-    border-radius: 16px;
-    box-shadow: 3px 3px 0px #000;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.care-btn:hover {
-    background: #fef08a;
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0px #000;
-}
-
-/* Giao diện Modal Popup Phóng To */
-.modal-overlay {
+.flying-heart {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 24px;
+    pointer-events: none;
     z-index: 1000;
-    padding: 20px;
-    animation: fadeIn 0.2s ease-in-out;
+    animation: floatUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-.modal-content {
-    background: #ffffff;
-    border: 4px solid #000;
-    border-radius: 24px;
-    padding: 25px 20px;
-    max-width: 360px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 8px 8px 0px #000;
-    animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+@keyframes floatUp {
+    0% {
+        transform: translate(0, 0) scale(0.6);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(var(--tx), -60px) scale(1.3);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(calc(var(--tx) * 1.5), -140px) scale(0.8);
+        opacity: 0;
+    }
 }
 
-.modal-content .emoji-box {
-    font-size: 55px;
-    margin-bottom: 10px;
-}
-
-.modal-content h3 {
-    font-size: 18px;
-    font-weight: 900;
-    color: #ff2a5f;
-    margin-bottom: 10px;
-}
-
-.modal-content p {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1e293b;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.modal-hint {
-    font-size: 11px;
-    font-weight: 800;
-    color: #64748b;
-    background: #f1f5f9;
-    padding: 6px;
-    border-radius: 10px;
-    border: 1px dashed #000;
-}
-
-@keyframes popUp {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-/* --- THANH NĂNG LƯỢNG GỌN GÀNG & XỊN XỎ --- */
-.energy-container {
-    background: #ffffff;
-    border: 2px solid #000000;
-    border-radius: 12px;
-    padding: 8px 12px;
-    margin: 0 auto 16px auto;
-    max-width: 90%;
-    box-shadow: 2px 2px 0px #000000;
-}
-
-.energy-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.energy-bar-track {
-    background-color: #f3f4f6;
-    border: 1.5px solid #000000;
-    border-radius: 20px;
-    height: 10px; /* Thu gọn chiều cao thanh */
-    overflow: hidden;
-    position: relative;
-}
-
-.energy-bar-fill {
-    background: linear-gradient(90deg, #ff4b72, #ff85a2); /* Hiệu ứng hồng chuyển sắc nịnh mắt */
-    height: 100%;
-    width: 20%;
-    border-radius: 20px;
-    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Hiệu ứng nảy nhẹ khi tăng % */
-}
-.letter-unlock-btn {
-    display: block;
-    margin: 12px auto 2px;
-    padding: 9px 16px;
-    background: #ff4b72;
-    color: #fff;
-    border: 2px solid #000;
-    border-radius: 12px;
-    box-shadow: 2px 2px 0 #000;
-    font-size: 13px;
-    animation: fadeIn 0.4s ease;
-}
-
-.letter-unlock-btn.hidden {
-    display: none;
-}
-
-.letter-unlock-btn:hover {
-    background: #ff2a5f;
-    transform: translateY(-1px);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* ==================== MÀN HÌNH BỨC THƯ BÍ MẬT ==================== */
 body.letter-open {
     overflow: hidden;
 }
@@ -371,149 +603,474 @@ body.letter-open {
 .letter-screen {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    z-index: 500;
+    background: rgba(30, 27, 24, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 60px 16px 40px;
     overflow-y: auto;
-    padding: 28px 18px;
-    background: linear-gradient(145deg, #fbe4e3, #f6c6c7 55%, #fbe5e5);
-}
-
-.letter-screen.hidden {
-    display: none;
+    animation: fadeIn 0.3s ease;
 }
 
 .letter-screen-close {
     position: fixed;
-    top: 16px;
-    right: 18px;
-    z-index: 1;
-    width: 42px;
-    height: 42px;
-    border: 2px solid #9a5b5c;
-    border-radius: 50%;
-    background: #fff8f5;
-    color: #7a4144;
-    font-size: 20px;
-    box-shadow: 2px 2px 0 #9a5b5c;
+    top: 18px;
+    right: 20px;
+    background: #ffffff;
+    color: var(--border-color);
+    border: 2.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--shadow-color);
+    z-index: 510;
+    transition: all 0.2s ease;
+}
+
+.letter-screen-close:hover {
+    background: #ff5277;
+    color: #ffffff;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--shadow-color);
 }
 
 .letter-page {
-    width: min(680px, 100%);
-    min-height: min(760px, calc(100vh - 56px));
-    padding: clamp(24px, 6vw, 48px);
-    border: 1px solid rgba(177, 104, 105, 0.35);
-    border-radius: 10px;
-    background:
-        radial-gradient(circle at 8% 14%, rgba(255, 255, 255, 0.7), transparent 23%),
-        #fff8f5;
-    box-shadow: 0 18px 55px rgba(117, 61, 64, 0.2);
-    color: #513b3a;
-    animation: popUp 0.35s ease both;
+    position: relative;
+    background: #fffdf9;
+    border: 3.5px solid var(--border-color);
+    border-radius: 28px;
+    padding: 42px 32px;
+    max-width: 780px;
+    width: 100%;
+    box-shadow: 12px 12px 0px var(--shadow-color);
+    margin-bottom: 40px;
+    background-image: 
+        radial-gradient(#fde8ef 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: letterUnfold 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes letterUnfold {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.92);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.letter-stamp {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: var(--color-yellow);
+    border: 2px dashed var(--border-color);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--color-pink);
+    transform: rotate(8deg);
+    letter-spacing: 1px;
 }
 
 .letter-decoration {
-    margin-bottom: 22px;
-    color: #c87578;
-    font-size: 28px;
-    letter-spacing: 10px;
     text-align: center;
+    font-size: 24px;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+
+.letter-header {
+    text-align: center;
+    margin-bottom: 24px;
+    border-bottom: 2px dashed #fbcfe8;
+    padding-bottom: 18px;
+}
+
+.letter-heading {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    color: #be123c;
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
+.letter-date {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #9f1239;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .letter-message {
-    padding: clamp(18px, 4vw, 30px);
-    border: 2px solid #e9aaa7;
-    border-radius: 14px 14px 4px 4px;
-    background: rgba(255, 246, 242, 0.88);
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: clamp(15px, 2.7vw, 18px);
-    line-height: 1.8;
-    text-align: left;
+    font-size: 16px;
+    line-height: 1.85;
+    color: #4a2828;
+    margin-bottom: 30px;
 }
 
-.letter-message h2 {
-    display: block;
-    min-height: 0;
-    margin-bottom: 8px;
-    color: #684443;
-    font-family: inherit;
-    font-size: 1.12em;
-    text-align: left;
+.letter-message p {
+    margin-bottom: 16px;
+    text-align: justify;
 }
 
-.letter-message p + p {
-    margin-top: 12px;
+.letter-highlight {
+    font-size: 18px !important;
+    font-weight: 800;
+    color: var(--color-pink);
+    text-align: center !important;
+    padding: 12px;
+    background: #ffe4e6;
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: 3px 3px 0 var(--shadow-color);
+    margin-top: 20px !important;
 }
 
-.letter-bottom {
+/* ==================== ALBUM POLAROID GALLERY ==================== */
+.letter-gallery-section {
+    margin: 32px 0 24px;
+    padding-top: 20px;
+    border-top: 2px dashed #fbcfe8;
+}
+
+.gallery-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--color-text);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.letter-gallery {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    align-items: stretch;
     gap: 20px;
-    min-height: 220px;
-    margin: -2px 0 0;
-    padding: 22px clamp(14px, 5vw, 42px);
-    background: #f6d0cc;
-}
-
-.letter-flowers {
-    color: #d96d83;
-    font-size: clamp(54px, 12vw, 92px);
-    line-height: 1.1;
-    transform: rotate(-8deg);
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
 .letter-photo {
-    width: min(250px, 58%);
-    margin: 0;
+    width: clamp(200px, 30%, 230px);
+    background: #ffffff;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
     padding: 10px 10px 14px;
-    transform: rotate(4deg);
-    background: #fffdfb;
-    box-shadow: 0 5px 16px rgba(82, 47, 47, 0.2);
+    box-shadow: 5px 6px 0px var(--shadow-color);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.washi-tape {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 20px;
+    background: rgba(254, 240, 138, 0.85);
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    z-index: 5;
+}
+
+.photo-1 { transform: rotate(-3.5deg); }
+.photo-2 { transform: rotate(2.5deg) translateY(-4px); }
+.photo-3 { transform: rotate(-2.5deg); }
+
+.photo-1 .washi-tape { background: rgba(254, 240, 138, 0.9); }
+.photo-2 .washi-tape { background: rgba(167, 243, 208, 0.9); }
+.photo-3 .washi-tape { background: rgba(244, 114, 182, 0.85); }
+
+.letter-photo:hover {
+    transform: scale(1.06) rotate(0deg) translateY(-6px);
+    z-index: 10;
+    box-shadow: 8px 12px 0px var(--shadow-color);
+}
+
+.photo-img-wrap {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+    background: #fdf2f8;
 }
 
 .letter-photo img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 11;
     object-fit: cover;
-    background: #f7e6e3;
-    color: #805f5e;
-    font-size: 13px;
-    text-align: center;
+    transition: transform 0.4s ease;
+}
+
+.letter-photo:hover img {
+    transform: scale(1.04);
 }
 
 .letter-photo figcaption {
-    padding-top: 8px;
-    color: #725453;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 12px;
+    padding: 10px 4px 4px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.photo-caption-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-text);
+}
+
+.photo-caption-sub {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--color-pink);
+    line-height: 1.35;
+}
+
+.photo-zoom-hint {
+    margin-top: 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #6b7280;
+    text-align: center;
+    background: #f3f4f6;
+    border-radius: 6px;
+    padding: 3px 0;
+}
+
+/* ==================== TƯƠNG TÁC THẢ TIM BẠN TRAI ==================== */
+.letter-interaction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 28px 0 16px;
+}
+
+.btn-send-heart {
+    background: #ffe4e6;
+    color: var(--color-pink);
+    border: 2.5px solid var(--border-color);
+    border-radius: 24px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 800;
+    box-shadow: 3px 3px 0 var(--shadow-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-send-heart:hover {
+    background: var(--color-pink);
+    color: #ffffff;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--shadow-color);
+}
+
+.btn-send-heart:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.heart-anim {
+    font-size: 20px;
+    display: inline-block;
+    animation: heartBeat 1.2s infinite;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+.heart-feedback {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-pink);
+    animation: fadeIn 0.3s ease;
 }
 
 .letter-signoff {
     padding-top: 20px;
-    color: #875658;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 18px;
-    font-style: italic;
+    border-top: 2px dashed #fbcfe8;
     text-align: right;
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: #9f1239;
 }
 
-@media (max-width: 480px) {
-    .letter-screen {
-        align-items: flex-start;
-        padding: 64px 14px 20px;
+/* ==================== LIGHTBOX MODAL ==================== */
+.lightbox-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    animation: fadeIn 0.25s ease;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #ffffff;
+    transition: all 0.2s ease;
+}
+
+.lightbox-close:hover {
+    background: var(--color-pink);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.lightbox-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    padding: 12px 12px 16px;
+    border: 3.5px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes zoomIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+}
+
+.lightbox-caption {
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--color-text);
+    text-align: center;
+}
+
+/* ==================== UTILITIES ==================== */
+.hidden {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ==================== RESPONSIVE CHO MOBILE ==================== */
+@media (max-width: 640px) {
+    body {
+        padding: 16px 12px;
+    }
+
+    .card {
+        padding: 28px 18px;
+    }
+
+    .card-title, .care-title {
+        font-size: 18px;
+    }
+
+    .emoji-box {
+        font-size: 60px;
+    }
+
+    .care-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .care-btn {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 12px 16px;
+        text-align: left;
+    }
+
+    .care-btn .btn-icon {
+        font-size: 22px;
     }
 
     .letter-page {
-        min-height: auto;
-        padding: 22px 16px;
+        padding: 32px 18px;
     }
 
-    .letter-bottom {
-        min-height: 175px;
-        padding: 16px 8px;
+    .letter-message {
+        font-size: 15px;
+    }
+
+    .letter-gallery {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .letter-photo {
+        width: 100%;
+        max-width: 280px;
+        transform: rotate(0deg) !important;
+    }
+
+    .photo-1, .photo-2, .photo-3 {
+        transform: rotate(0deg) !important;
+    }
+
+    .music-controller {
+        top: 10px;
+        right: 10px;
+    }
+
+    .music-toggle-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .letter-stamp {
+        display: none;
     }
 }

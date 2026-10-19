@@ -3,94 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Súp pơ bí mật 20/11 ✨</title>
-    <!-- Google Fonts Gen Z -->
+    <title>Chúc mừng 20/10 - Dành tặng công chúa của anh ✨💖</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Dancing Script -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Background đốm mây nhí nhảnh -->
-    <div class="bg-shape shape-1"></div>
-    <div class="bg-shape shape-2"></div>
+    <!-- Container cánh hoa và trái tim rơi tự do nền -->
+    <div class="falling-container" id="falling-container" aria-hidden="true"></div>
 
-    <!-- Container chính -->
-    <div class="card" id="main-card">
-        <div class="badge-tag">⚡ MISSION 20/10 ⚡</div>
-        <div class="emoji-box" id="emoji">🥺</div>
-        <h2 id="question-text">Nè, hôm nay thế giới có làm Thảo Ly mệt mỏi không? 20/10 nhưng tớ chỉ muốn hỏi là: Cậu hôm nay có vui hongg?</h2>
-        
-        <div class="btn-group">
-            <button class="btn-yes" id="btn-yes" onclick="acceptProposal()">Vui lắm nha! 🥰</button>
-            <button class="btn-no" id="btn-no" onclick="refuseProposal()">Hơi mệt xíu 🥺</button>
-        </div>
+    <!-- Nút điều khiển nhạc nền lofi góc phải -->
+    <div class="music-controller">
+        <button id="btn-music-toggle" class="music-toggle-btn" onclick="toggleBgmMusic()" title="Bật/Tắt nhạc nền lofi lãng mạn" aria-label="Bật/Tắt nhạc nền">
+            <span class="music-icon">🎵</span>
+            <span class="music-label" id="music-label">Nhạc: Tắt</span>
+            <div class="equalizer-bars hidden" id="equalizer-bars">
+                <span></span><span></span><span></span>
+            </div>
+        </button>
     </div>
 
-   <!-- Màn hình Trạm Sạc Năng Lượng khi chọn Vui -->
-    <div class="card hidden" id="success-card">
-        <div class="badge-tag success-tag">⚡ TRẠM SẠC NĂNG LƯỢNG 20/10 ⚡</div>
-       <div class="emoji-box" id="care-emoji" onclick="easterEggPin()" style="cursor: pointer;" title="Bấm vào pin để nhận thêm năng lượng nhé!">🔋✨</div>
-        <h2 id="care-title" style="color: #000; min-height: auto; margin-bottom: 10px;">Thảo Ly, cùng nạp đầy năng lượng nhé! ⚡</h2>
-        <p class="subtitle" id="care-desc">Dưới đây là 3 "liều thuốc tinh thần" tớ chuẩn bị riêng cho cậu hôm nay, bấm thử từng nút bên dưới nhe:</p>
-        <!-- Thanh tiến trình năng lượng -->
-<div class="energy-container">
-    <div class="energy-label">⚡ Năng lượng chữa lành: <span id="energy-text">20%</span></div>
-    <div class="energy-bar-track">
-        <div id="energy-fill" class="energy-bar-fill"></div>
-    </div>
-    <button class="letter-unlock-btn hidden" id="letter-unlock-button" onclick="openLetter()" aria-haspopup="dialog">
-        💌 Mở lá thư bí mật
-    </button>
-</div>
+    <!-- Background đốm màu Neo-Brutalism -->
+    <div class="bg-shape shape-1" aria-hidden="true"></div>
+    <div class="bg-shape shape-2" aria-hidden="true"></div>
+    <div class="bg-shape shape-3" aria-hidden="true"></div>
+    <div class="bg-shape shape-4" aria-hidden="true"></div>
 
-        <!-- 3 Nút tương tác -->
-        <div class="care-buttons">
-            <button class="care-btn" onclick="triggerMusic()">🎧 1. Nhạc Chill chữa lành</button>
-            <button class="care-btn" onclick="triggerHug()">🧸 2. Nhận chiếc ôm từ xa</button>
-            <button class="care-btn" onclick="triggerLetter()">💌 3. Lời nhắn động viên</button>
+    <!-- MAIN APP CONTAINER -->
+    <main class="app-container">
 
-        </div>
-        
+        <!-- ==================== GIAI ĐOẠN 1: HỎI THĂM & NÚT CHẠY TRỐN ==================== -->
+        <section class="card" id="main-card">
+            <div class="badge-tag">🎀 20/10 LOVE MISSION 🎀</div>
+            <div class="emoji-box" id="emoji">🥺</div>
+            <h1 class="card-title" id="question-text">
+                Hôm nay 20/10 nè! Thế giới ngoài kia có làm <b>Tâm</b> mệt mỏi hong? Anh chỉ muốn hỏi: Hôm nay em bé của anh có vui hongg? 🥰
+            </h1>
+            
+            <div class="btn-group">
+                <button class="btn-yes" id="btn-yes" onclick="acceptProposal()">Vui lắm nha! 🥰</button>
+                <button class="btn-no" id="btn-no" onclick="refuseProposal()">Hơi mệt xíu 🥺</button>
+            </div>
+            <p class="hint-text" id="hint-text">Bật mí: Đừng ngại bấm thử nút bên phải nha 😜</p>
+        </section>
 
-        <!-- Khung hiển thị nội dung khi bấm vào từng nút -->
-        <div class="care-display hidden" id="care-display">
-            <p id="display-text"></p>
-        </div>
+        <!-- ==================== GIAI ĐOẠN 2: TRẠM SẠC NĂNG LƯỢNG ==================== -->
+        <section class="card hidden" id="success-card">
+            <div class="badge-tag success-tag">⚡ TRẠM SẠC NĂNG LƯỢNG 20/10 ⚡</div>
+            <div class="emoji-box" id="care-emoji" onclick="easterEggPin()" style="cursor: pointer;" title="Bấm vào hoa để nhận thêm năng lượng bí mật nhé!">💐✨</div>
+            <h2 class="care-title" id="care-title">Tâm, cùng nạp đầy năng lượng 20/10 nhé! ⚡💖</h2>
+            <p class="subtitle" id="care-desc">Anh đã chuẩn bị những "liều thuốc tinh thần" đặc biệt dành riêng cho em bé nè. Hãy bấm vào từng nút bên dưới để sạc đầy 100% pin yêu thương nhe:</p>
+            
+            <!-- Thanh tiến trình năng lượng -->
+            <div class="energy-container">
+                <div class="energy-header">
+                    <span class="energy-label">⚡ Pin yêu thương:</span>
+                    <span class="energy-value" id="energy-text">20%</span>
+                </div>
+                <div class="energy-bar-track">
+                    <div id="energy-fill" class="energy-bar-fill"></div>
+                </div>
+                <button class="letter-unlock-btn hidden" id="letter-unlock-button" onclick="openLetter()" aria-haspopup="dialog">
+                    💌 Mở Lá Thư Bí Mật & Album Của Chúng Mình ✨
+                </button>
+            </div>
 
-        <!-- Nhạc Lofi chữa lành nhẹ nhàng -->
-        <audio id="chill-music" loop>
-            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-        </audio>
-    </div>
+            <!-- 4 Nút tương tác nạp năng lượng -->
+            <div class="care-buttons">
+                <button class="care-btn care-btn-music" onclick="triggerMusic()">
+                    <span class="btn-icon">🎧</span>
+                    <span class="btn-text">1. Giai điệu Chill chữa lành</span>
+                </button>
+                <button class="care-btn care-btn-hug" onclick="triggerHug()">
+                    <span class="btn-icon">🫂</span>
+                    <span class="btn-text">2. Chiếc ôm & 1000 nụ hôn</span>
+                </button>
+                <button class="care-btn care-btn-letter" onclick="triggerLetter()">
+                    <span class="btn-icon">💌</span>
+                    <span class="btn-text">3. Lời nhắn 20/10 ngọt ngào</span>
+                </button>
+                <button class="care-btn care-btn-voucher" onclick="triggerVoucher()">
+                    <span class="btn-icon">🎁</span>
+                    <span class="btn-text">4. Rút Phiếu Quà Tặng 20/10</span>
+                </button>
+            </div>
 
+            <!-- Khung hiển thị nội dung máy tính gõ chữ -->
+            <div class="care-display hidden" id="care-display">
+                <div class="display-tag" id="display-tag">Tin nhắn yêu thương:</div>
+                <p id="display-text"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== GIAI ĐOẠN 3: LÁ THƯ BÍ MẬT & ALBUM KỶ NIỆM ==================== -->
     <section class="letter-screen hidden" id="letter-screen" role="dialog" aria-modal="true" aria-labelledby="letter-title">
-        <button class="letter-screen-close" type="button" onclick="closeLetter()" aria-label="Đóng lá thư">✕</button>
+        <button class="letter-screen-close" type="button" onclick="closeLetter()" aria-label="Đóng lá thư">✕ Đóng</button>
         <div class="letter-page">
-            <div class="letter-decoration" aria-hidden="true">🌸 💗 🌷</div>
-            <div class="letter-message">
-                <h2 id="letter-title">Gửi Thảo Ly,</h2>
-                <p>
-                    <em>Chúc mừng 20/10 nhe! Chúc cậu hôm nay nhận được thật nhiều quà, được ăn những món mình thích và lúc nào cũng giữ nụ cười thật rạng rỡ trên môi. Dù dạo này có bận rộn hay áp lực thế nào thì cậu cũng nhớ chăm sóc bản thân thật tốt nhé. Cảm ơn cậu vì đã luôn mang năng lượng tích cực đến cho mọi người xung quanh. Mong rằng mọi chuyện sắp tới của cậu sẽ thật mượt mà, may mắn và luôn gặp nhiều điều vui vẻ!</em>
+            <div class="letter-stamp" aria-hidden="true">20/10 SPECIAL</div>
+            <div class="letter-decoration" aria-hidden="true">🌸 💐 🌷 💗 💐 🌸</div>
+            
+            <header class="letter-header">
+                <h2 id="letter-title" class="letter-heading">Gửi Tâm - Em bé đáng yêu của anh,</h2>
+                <div class="letter-date">Ngày 20 tháng 10 năm 2026 • Ngày Phụ nữ Việt Nam</div>
+            </header>
+
+            <article class="letter-message">
+                <p id="letter-p1">
+                    Chúc mừng ngày Phụ nữ Việt Nam 20/10 thật ngọt ngào nhe em yêu! Chúc cô gái xinh đẹp, dịu dàng và đáng yêu nhất trần đời của anh luôn luôn rạng rỡ, ngập tràn tiếng cười hạnh phúc và luôn nhận được những điều tuyệt vời nhất!
                 </p>
-                <p>Happy 20/10! ✨💖</p>
+                <p id="letter-p2">
+                    Cảm ơn em vì đã đến bên anh, cùng anh chia sẻ từng bữa ăn, từng lần đi xem phim, những buổi hẹn hò đầy ắp tiếng cười và cả những phút giây bình yên khi hai đứa ở cạnh nhau. Mỗi nụ cười hay nét mặt nhí nhố của em đều là liều thuốc chữa lành lớn nhất cho anh sau những ngày bận rộn.
+                </p>
+                <p id="letter-p3">
+                    Dù cuộc sống ngoài kia có đôi lúc làm em mệt mỏi hay áp lực, em hãy nhớ rằng luôn có anh ở đây — làm điểm tựa vững chãi, luôn lắng nghe, dỗ dành và yêu thương em vô điều kiện. Chúc em bé của anh một ngày 20/10 tràn ngập hoa, quà và tình yêu vô bờ bến!
+                </p>
+                <p class="letter-highlight" id="letter-highlight">
+                    Happy Vietnamese Women's Day! Yêu Tâm rất nhiều! ✨💖
+                </p>
+            </article>
+            
+            <!-- Album 3 tấm hình kỷ niệm Polaroid của hai bạn -->
+            <div class="letter-gallery-section">
+                <div class="gallery-title">📸 Album Khoảnh Khắc Của Chúng Mình 📸</div>
+                <div class="letter-gallery">
+                    
+                    <!-- Ảnh 1: Đi xem phim -->
+                    <figure class="letter-photo photo-1" onclick="openLightbox('images/photo-1.jpg', 'Buổi hẹn hò đi xem phim cùng em bé chu mỏ đáng yêu 💕🎬')">
+                        <div class="washi-tape"></div>
+                        <div class="photo-img-wrap">
+                            <img src="images/photo-1.jpg" alt="Khoảnh khắc kỷ niệm rạp chiếu phim của hai bạn">
+                        </div>
+                        <figcaption>
+                            <span class="photo-caption-title">Kỷ niệm rạp phim</span>
+                            <span class="photo-caption-sub">Chu mỏ đáng yêu cùng anh nè 💕</span>
+                        </figcaption>
+                        <div class="photo-zoom-hint">🔍 Nhấn để phóng to</div>
+                    </figure>
+
+                    <!-- Ảnh 2: Vẫy tay cute -->
+                    <figure class="letter-photo photo-2" onclick="openLightbox('images/photo-2.jpg', 'Hai đứa mình cùng vẫy tay chào hạnh phúc nè ✨👋')">
+                        <div class="washi-tape"></div>
+                        <div class="photo-img-wrap">
+                            <img src="images/photo-2.jpg" alt="Khoảnh khắc vẫy tay vui nhộn của hai bạn">
+                        </div>
+                        <figcaption>
+                            <span class="photo-caption-title">Bên em là bình yên</span>
+                            <span class="photo-caption-sub">Cùng vẫy tay đón niềm vui ✨</span>
+                        </figcaption>
+                        <div class="photo-zoom-hint">🔍 Nhấn để phóng to</div>
+                    </figure>
+
+                    <!-- Ảnh 3: Biểu cảm lầy lội -->
+                    <figure class="letter-photo photo-3" onclick="openLightbox('images/photo-3.jpg', 'Dù nghiêm túc hay nhí nhảnh, em vẫn là người đáng yêu nhất vũ trụ 💖😜')">
+                        <div class="washi-tape"></div>
+                        <div class="photo-img-wrap">
+                            <img src="images/photo-3.jpg" alt="Khoảnh khắc biểu cảm vui nhộn của hai bạn">
+                        </div>
+                        <figcaption>
+                            <span class="photo-caption-title">Khoảnh khắc lầy lội</span>
+                            <span class="photo-caption-sub">Luôn là người đáng yêu nhất 💖</span>
+                        </figcaption>
+                        <div class="photo-zoom-hint">🔍 Nhấn để phóng to</div>
+                    </figure>
+
+                </div>
             </div>
-            <div class="letter-bottom">
-                <div class="letter-flowers" aria-hidden="true">🌷<br>🌸</div>
-                <figure class="letter-photo">
-                    <img src="images/letter-photo.jpg" alt="Ảnh kỷ niệm của hai bạn">
-                    <figcaption>Super moment 💕</figcaption>
-                </figure>
+
+            <!-- Tương tác thả tim cho bạn trai -->
+            <div class="letter-interaction">
+                <button class="btn-send-heart" id="btn-send-heart" onclick="sendHeartToBoyfriend()">
+                    <span class="heart-anim">💖</span> Thả tim cho anh (<span id="heart-count">0</span>)
+                </button>
+                <div class="heart-feedback hidden" id="heart-feedback">Đã gửi tình yêu đến anh Henry Long! 🥰</div>
             </div>
-            <div class="letter-signoff">Hôm nay cũng thật bá khí nhé!!</div>
+            
+            <div class="letter-signoff" id="letter-signoff">Người yêu của em - Henry Long 💕</div>
         </div>
     </section>
 
+    <!-- ==================== LIGHTBOX XEM ẢNH PHÓNG TO ==================== -->
+    <div class="lightbox-modal hidden" id="lightbox-modal" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Đóng ảnh phóng to">✕</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Ảnh kỷ niệm phóng to">
+            <p id="lightbox-caption" class="lightbox-caption"></p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    <!-- Âm thanh hiệu ứng -->
-<audio id="sound-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
-<audio id="sound-tada" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3" preload="auto"></audio>
-<audio id="sound-secret" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" preload="auto"></audio>
 </body>
 </html>
