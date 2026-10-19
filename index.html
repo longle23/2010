@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Súp pơ bí mật 20/10 ✨</title>
+    <!-- Google Fonts Gen Z -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background đốm mây nhí nhảnh -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <!-- Container chính -->
+    <div class="card" id="main-card">
+        <div class="badge-tag">⚡ MISSION 20/10 ⚡</div>
+        <div class="emoji-box" id="emoji">🥺</div>
+        <h2 id="question-text">Nè, hôm nay thế giới có làm Thảo Ly mệt mỏi không? 20/10 nhưng tớ chỉ muốn hỏi là: Cậu hôm nay có vui hongg?</h2>
+        
+        <div class="btn-group">
+            <button class="btn-yes" id="btn-yes" onclick="acceptProposal()">Vui lắm nha! 🥰</button>
+            <button class="btn-no" id="btn-no" onclick="refuseProposal()">Hơi mệt xíu 🥺</button>
+        </div>
+    </div>
+
+   <!-- Màn hình Trạm Sạc Năng Lượng khi chọn Vui -->
+    <div class="card hidden" id="success-card">
+        <div class="badge-tag success-tag">⚡ TRẠM SẠC NĂNG LƯỢNG 20/10 ⚡</div>
+       <div class="emoji-box" id="care-emoji" onclick="easterEggPin()" style="cursor: pointer;" title="Bấm vào pin để nhận thêm năng lượng nhé!">🔋✨</div>
+        <h2 id="care-title" style="color: #000; min-height: auto; margin-bottom: 10px;">Thảo Ly, cùng nạp đầy năng lượng nhé! ⚡</h2>
+        <p class="subtitle" id="care-desc">Dưới đây là 3 "liều thuốc tinh thần" tớ chuẩn bị riêng cho cậu hôm nay, bấm thử từng nút bên dưới nhe:</p>
+        <!-- Thanh tiến trình năng lượng -->
+<div class="energy-container">
+    <div class="energy-label">⚡ Năng lượng chữa lành: <span id="energy-text">20%</span></div>
+    <div class="energy-bar-track">
+        <div id="energy-fill" class="energy-bar-fill"></div>
+    </div>
+    <button class="letter-unlock-btn hidden" id="letter-unlock-button" onclick="openLetter()" aria-haspopup="dialog">
+        💌 Mở lá thư bí mật
+    </button>
+</div>
+
+        <!-- 3 Nút tương tác -->
+        <div class="care-buttons">
+            <button class="care-btn" onclick="triggerMusic()">🎧 1. Nhạc Chill chữa lành</button>
+            <button class="care-btn" onclick="triggerHug()">🧸 2. Nhận chiếc ôm từ xa</button>
+            <button class="care-btn" onclick="triggerLetter()">💌 3. Lời nhắn động viên</button>
+
+        </div>
+        
+
+        <!-- Khung hiển thị nội dung khi bấm vào từng nút -->
+        <div class="care-display hidden" id="care-display">
+            <p id="display-text"></p>
+        </div>
+
+        <!-- Nhạc Lofi chữa lành nhẹ nhàng -->
+        <audio id="chill-music" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <section class="letter-screen hidden" id="letter-screen" role="dialog" aria-modal="true" aria-labelledby="letter-title">
+        <button class="letter-screen-close" type="button" onclick="closeLetter()" aria-label="Đóng lá thư">✕</button>
+        <div class="letter-page">
+            <div class="letter-decoration" aria-hidden="true">🌸 💗 🌷</div>
+            <div class="letter-message">
+                <h2 id="letter-title">Gửi Thảo Ly,</h2>
+                <p>
+                    <em>Chúc mừng 20/10 nhe! Chúc cậu hôm nay nhận được thật nhiều quà, được ăn những món mình thích và lúc nào cũng giữ nụ cười thật rạng rỡ trên môi. Dù dạo này có bận rộn hay áp lực thế nào thì cậu cũng nhớ chăm sóc bản thân thật tốt nhé. Cảm ơn cậu vì đã luôn mang năng lượng tích cực đến cho mọi người xung quanh. Mong rằng mọi chuyện sắp tới của cậu sẽ thật mượt mà, may mắn và luôn gặp nhiều điều vui vẻ!</em>
+                </p>
+                <p>Happy 20/10! ✨💖</p>
+            </div>
+            <div class="letter-bottom">
+                <div class="letter-flowers" aria-hidden="true">🌷<br>🌸</div>
+                <figure class="letter-photo">
+                    <img src="images/letter-photo.jpg" alt="Ảnh kỷ niệm của hai bạn">
+                    <figcaption>Super moment 💕</figcaption>
+                </figure>
+            </div>
+            <div class="letter-signoff">Hôm nay cũng thật bá khí nhé!!</div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <!-- Âm thanh hiệu ứng -->
+<audio id="sound-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
+<audio id="sound-tada" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3" preload="auto"></audio>
+<audio id="sound-secret" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" preload="auto"></audio>
+</body>
+</html>
