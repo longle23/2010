@@ -173,7 +173,7 @@ function toggleBgmMusic() {
 // ==================== GIAI ĐOẠN 1: NÚT CHẠY TRỐN & HỎI THĂM ====================
 const noTexts = [
     "Hơi mệt xíu 🥺",
-    "Hôm nay đi học / đi làm mệt lắm hả em bé? 🥺",
+    "Hôm nay đi làm mệt lắm hả em bé iuu? 🥺",
     "Ai dám làm công chúa của anh buồn saoo? 💔",
     "Thương em nhiều lắm nè, ngoan anh ôm anh dỗ nha! 🥺",
     "Hôm nay là 20/10 mà, cấm em bé được mệt đó nha! 😜",
