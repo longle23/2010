@@ -4,34 +4,40 @@
 // ==========================================================================
 
 const CONFIG = {
-    // Có thể tùy chỉnh qua URL: ?name=Tên_Người_Yêu hoặc sửa trực tiếp ở đây
-    recipientName: new URLSearchParams(window.location.search).get('name')?.trim() || 'Tâm',
+    // Tùy chỉnh qua URL: ?name=Tên_Người_Yêu (mặc định ưu tiên nội dung viết trong HTML)
+    recipientName: new URLSearchParams(window.location.search).get('name')?.trim() || 'em',
     senderName: 'Henry Long',
     senderSignoff: 'Người yêu của em - Henry Long 💕'
 };
 
 const targetName = CONFIG.recipientName;
 
-// Đồng bộ tên người yêu vào toàn bộ các vị trí trong giao diện
+// Đồng bộ tên người yêu vào giao diện (chỉ ghi đè nếu có tham số ?name= trên URL, mặc định giữ nguyên 100% nội dung trong HTML)
 function applyRecipientName() {
+    const urlName = new URLSearchParams(window.location.search).get('name')?.trim();
+    if (!urlName) {
+        // Giữ nguyên 100% text gốc viết trong index.html
+        return;
+    }
+
     const qEl = document.getElementById('question-text');
     if (qEl) {
-        qEl.innerHTML = `Hôm nay 20/10 nè! Thế giới ngoài kia có làm <b>${targetName}</b> mệt mỏi hong? Anh chỉ muốn hỏi: Hôm nay em bé của anh có vui hongg? 🥰`;
+        qEl.innerHTML = `Hôm nay 20/10 nè! Thế giới ngoài kia có làm <b>${urlName}</b> mệt mỏi hong? Anh chỉ muốn hỏi: Hôm nay em bé của anh có vui hongg? 🥰`;
     }
 
     const titleEl = document.getElementById('care-title');
     if (titleEl) {
-        titleEl.innerHTML = `<b>${targetName}</b>, cùng nạp đầy năng lượng 20/10 nhé! ⚡💖`;
+        titleEl.innerHTML = `<b>${urlName}</b>, cùng nạp đầy năng lượng 20/10 nhé! ⚡💖`;
     }
 
     const letterTitleEl = document.getElementById('letter-title');
     if (letterTitleEl) {
-        letterTitleEl.innerText = `Gửi ${targetName} - Em bé đáng yêu của anh,`;
+        letterTitleEl.innerText = `Gửi ${urlName} - Em bé đáng yêu của anh,`;
     }
 
     const letterHighlight = document.getElementById('letter-highlight');
     if (letterHighlight) {
-        letterHighlight.innerText = `Happy Vietnamese Women's Day! Yêu ${targetName} rất nhiều! ✨💖`;
+        letterHighlight.innerText = `Happy Vietnamese Women's Day! Yêu ${urlName} rất nhiều! ✨💖`;
     }
 
     const signoffEl = document.getElementById('letter-signoff');
