@@ -277,8 +277,8 @@ const noTexts = [
     "Hơi mệt xíu 🥺",
     "Hôm nay đi làm mệt lắm hả em bé iuu? 🥺",
     "Ai dám làm công chúa của anh buồn saoo? 💔",
-    "Thương em nhiều lắm nè, ngoan anh ôm anh dỗ nha! 🥺",
-    "Hôm nay là 20/10 mà, cấm em bé được mệt đó nha! 😜",
+    "Thương em nhiều lắm nè, ngoan anh ôm anh nha! 🥺",
+    "Hôm nay là 20/10 mà, em bé không được mệt đó nha! 😜",
     "Hết nút mệt mỏi rồi! Vui lên cùng anh nè! 💖"
 ];
 
@@ -390,7 +390,7 @@ function triggerHug() {
     playPopSound();
     spawnHeartExplosion();
     document.getElementById('care-emoji').innerText = "🫂💖";
-    showDisplay(`🫂 Sending a big warm hug! Gửi cho ${targetName} một chiếc ôm siêu to ấm áp và 1000 nụ hôn. Hôm nay em là cô gái xinh đẹp và hạnh phúc nhất trần đời! 💖`, "Vòng tay ấm áp:");
+    showDisplay(`🫂 Sending a big warm hug! Gửi cho ${targetName} một chiếc ôm siêu to ấm áp và 1000 nụ hôn. Hôm nay em là cô gái xinh đẹp và hạnh phúc nhất! 💖`, "Vòng tay ấm áp:");
 }
 
 // 3. Lời nhắn 20/10 ngọt ngào
@@ -398,7 +398,7 @@ function triggerLetter() {
     addEnergy(25);
     playPopSound();
     document.getElementById('care-emoji').innerText = "💌✨";
-    showDisplay(`💌 "Chúc mừng ngày Phụ nữ Việt Nam 20/10! Cảm ơn em vì đã đến bên anh, cùng anh chia sẻ từng ngày tháng tuyệt vời. Yêu ${targetName} rất nhiều!" 💕`, "Tin nhắn yêu thương:");
+    showDisplay(`💌 "Chúc mừng ngày Phụ nữ Việt Nam 20/10! Cảm ơn em vì đã bên anh, cùng anh chia sẻ từng ngày tháng tuyệt vời. Yêu ${targetName} rất nhiều!" 💕`, "Tin nhắn yêu thương:");
 }
 
 // 4. Phiếu Quà Tặng Yêu Thương (Love Vouchers)
