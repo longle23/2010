@@ -64,7 +64,7 @@ function getAudioContext() {
         }
     }
     if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(() => {});
     }
     return audioCtx;
 }
@@ -72,7 +72,7 @@ function getAudioContext() {
 function playAudioTone(freqs, duration = 0.15, type = 'sine') {
     try {
         const ctx = getAudioContext();
-        if (!ctx) return;
+        if (!ctx || ctx.state !== 'running') return;
         freqs.forEach((freq, idx) => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -81,7 +81,8 @@ function playAudioTone(freqs, duration = 0.15, type = 'sine') {
             gain.connect(ctx.destination);
             const startTime = ctx.currentTime + idx * 0.08;
             osc.frequency.setValueAtTime(freq, startTime);
-            gain.gain.setValueAtTime(0.15, startTime);
+            gain.gain.setValueAtTime(0.0001, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.15, startTime + 0.02);
             gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
             osc.start(startTime);
             osc.stop(startTime + duration);
@@ -102,6 +103,8 @@ const playHeartSound = () => playAudioTone([698, 880, 1046], 0.15, 'sine');
 let isBgmPlaying = false;
 let bgmTimer = null;
 let bgmNoteIndex = 0;
+let unlockListenersAttached = false;
+let musicHintTimer = null;
 
 // Giai điệu lãng mạn nhẹ nhàng (chuỗi hợp âm nốt nhạc Cmaj7 - Am7 - Fmaj7 - G)
 const bgmMelody = [
@@ -115,7 +118,7 @@ function playNextBgmNote() {
     if (!isBgmPlaying) return;
     try {
         const ctx = getAudioContext();
-        if (ctx) {
+        if (ctx && ctx.state === 'running') {
             const freq = bgmMelody[bgmNoteIndex % bgmMelody.length];
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -125,11 +128,12 @@ function playNextBgmNote() {
             
             const now = ctx.currentTime;
             osc.frequency.setValueAtTime(freq, now);
-            gain.gain.setValueAtTime(0.04, now);
-            gain.gain.exponentialRampToValueAtTime(0.0005, now + 0.6);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.045, now + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
             
             osc.start(now);
-            osc.stop(now + 0.6);
+            osc.stop(now + 0.7);
             
             bgmNoteIndex++;
         }
@@ -138,14 +142,109 @@ function playNextBgmNote() {
     bgmTimer = setTimeout(playNextBgmNote, 380);
 }
 
-function startBgmMusic() {
+function showMusicHint() {
     if (isBgmPlaying) return;
-    isBgmPlaying = true;
-    getAudioContext();
+    if (musicHintTimer) clearTimeout(musicHintTimer);
+    musicHintTimer = setTimeout(() => {
+        if (isBgmPlaying) return;
+        let hint = document.getElementById('music-autoplay-hint');
+        if (!hint) {
+            hint = document.createElement('div');
+            hint.id = 'music-autoplay-hint';
+            hint.className = 'music-autoplay-hint';
+            hint.innerHTML = '<span class="music-hint-icon">🎵</span><span class="music-hint-text">Chạm vào màn hình để bật nhạc chill 20/10 nha ✨</span>';
+            hint.onclick = () => {
+                startBgmMusic();
+            };
+            document.body.appendChild(hint);
+        } else {
+            hint.classList.remove('fade-out', 'hidden');
+        }
+    }, 600);
+}
+
+function hideMusicHint() {
+    if (musicHintTimer) {
+        clearTimeout(musicHintTimer);
+        musicHintTimer = null;
+    }
+    const hint = document.getElementById('music-autoplay-hint');
+    if (hint) {
+        hint.classList.add('fade-out');
+        setTimeout(() => {
+            if (hint.parentNode) hint.parentNode.removeChild(hint);
+        }, 350);
+    }
+    const toggleBtn = document.getElementById('btn-music-toggle');
+    if (toggleBtn) {
+        toggleBtn.classList.remove('music-pending');
+    }
+}
+
+function setupAutoplayUnlock() {
+    if (unlockListenersAttached) return;
+    unlockListenersAttached = true;
+
+    const unlockHandler = () => {
+        const ctx = getAudioContext();
+        if (ctx && ctx.state === 'suspended') {
+            ctx.resume().then(() => {
+                startBgmMusic();
+            }).catch(() => {});
+        } else {
+            startBgmMusic();
+        }
+
+        const events = ['click', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown'];
+        events.forEach(evt => {
+            document.removeEventListener(evt, unlockHandler, true);
+            window.removeEventListener(evt, unlockHandler, true);
+        });
+        unlockListenersAttached = false;
+        hideMusicHint();
+    };
+
+    const events = ['click', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown'];
+    events.forEach(evt => {
+        document.addEventListener(evt, unlockHandler, { capture: true, once: true, passive: true });
+        window.addEventListener(evt, unlockHandler, { capture: true, once: true, passive: true });
+    });
+}
+
+function startBgmMusic() {
+    const ctx = getAudioContext();
     const bars = document.getElementById('equalizer-bars');
     const label = document.getElementById('music-label');
+    const toggleBtn = document.getElementById('btn-music-toggle');
+
+    if (!ctx) return;
+
+    if (ctx.state === 'suspended') {
+        ctx.resume().then(() => {
+            if (!isBgmPlaying) {
+                isBgmPlaying = true;
+                if (bars) bars.classList.remove('hidden');
+                if (label) label.innerText = 'Nhạc: Bật';
+                if (toggleBtn) toggleBtn.classList.remove('music-pending');
+                hideMusicHint();
+                playNextBgmNote();
+            }
+        }).catch(() => {
+            if (label && !isBgmPlaying) label.innerText = 'Nhạc: Chờ chạm';
+            if (toggleBtn) toggleBtn.classList.add('music-pending');
+            showMusicHint();
+        });
+
+        setupAutoplayUnlock();
+        return;
+    }
+
+    if (isBgmPlaying) return;
+    isBgmPlaying = true;
     if (bars) bars.classList.remove('hidden');
     if (label) label.innerText = 'Nhạc: Bật';
+    if (toggleBtn) toggleBtn.classList.remove('music-pending');
+    hideMusicHint();
     playNextBgmNote();
 }
 
@@ -157,8 +256,11 @@ function stopBgmMusic() {
     }
     const bars = document.getElementById('equalizer-bars');
     const label = document.getElementById('music-label');
+    const toggleBtn = document.getElementById('btn-music-toggle');
     if (bars) bars.classList.add('hidden');
     if (label) label.innerText = 'Nhạc: Tắt';
+    if (toggleBtn) toggleBtn.classList.remove('music-pending');
+    hideMusicHint();
 }
 
 function toggleBgmMusic() {
@@ -191,6 +293,9 @@ let yesPaddingH = 30;
 
 function refuseProposal() {
     clickCount++;
+    if (!isBgmPlaying) {
+        startBgmMusic();
+    }
     playBoingSound();
 
     const btnNo = document.getElementById('btn-no');
@@ -529,9 +634,26 @@ function initFallingEffect() {
     setInterval(createFallingItem, 700);
 }
 
+// ==================== TỰ ĐỘNG BẬT NHẠC KHI VÀO TRANG ====================
+function initAutoMusic() {
+    startBgmMusic();
+    setupAutoplayUnlock();
+}
+
 // Khởi chạy khi tải trang
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFallingEffect);
+    document.addEventListener('DOMContentLoaded', () => {
+        initFallingEffect();
+        initAutoMusic();
+    });
 } else {
     initFallingEffect();
+    initAutoMusic();
 }
+
+window.addEventListener('load', initAutoMusic, { once: true });
+window.addEventListener('pageshow', initAutoMusic, { once: true });
+
+// Cố gắng kích hoạt ngay lập tức
+initAutoMusic();
+
