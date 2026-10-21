@@ -318,7 +318,7 @@ function refuseProposal() {
         }
 
         if (hintEl) {
-            hintEl.innerText = `Lần bấm thứ ${clickCount}: Anh vẫn đang đợi nụ cười của ${targetName} đó nha! 🥰`;
+            hintEl.innerText = `Lần bấm thứ ${clickCount}: Vẫn đang đợi nụ cười của ${targetName} đó nha! 🥰`;
         }
 
         // Tạo hiệu ứng lắc nhẹ
@@ -327,7 +327,7 @@ function refuseProposal() {
         // Đến lượt bấm cuối cùng: Ẩn nút "Mệt" và bắt buộc vui!
         if (btnNo) btnNo.classList.add('hidden');
         if (qEl) {
-            qEl.innerHTML = `Hết nút mệt mỏi rồi nha! Bắt buộc hôm nay <b>${targetName}</b> phải thật vui vẻ và hạnh phúc đó! 🥰✨`;
+            qEl.innerHTML = `Hết nút mệt mỏi rồi nha! Bắt buộc hôm nay <b>${targetName}</b> phải thật vui vẻ và hạnh phúc nhé! 🥰✨`;
         }
         if (emojiEl) emojiEl.innerText = "🥰";
         if (hintEl) hintEl.innerText = "Giờ thì bấm nút màu hồng siêu to khổng lồ này đi nàooo! 👇";
